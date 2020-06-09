@@ -2,12 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 export default function Children() {
-    let count = useSelector(state => state.count)
+    let color = useSelector(state => state.color)
 
     return (
-        <div>
-            <h2>Children part</h2>
-            <h3>{count}</h3>
+        <div className="box" style={{color: color, backgroundColor: 'blue'}}>
+            <h2>Colorful Box</h2>
         </div>
     )
 }

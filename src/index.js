@@ -7,20 +7,34 @@ import { Provider } from 'react-redux'
 import { createStore} from 'redux'
 
 const initialState = {
-  count: 0
+  count: 0,
+  boxList: [],
+  color: 'black'
 }
 
 function reducer(state=initialState, action) {
   if(action.type === 'increment') {
     state.count++
+    state.boxList.push(state.count)
+    console.log("BoxList:", state.boxList)
   } else if(action.type === 'decrement' && state.count > 0) {
     state.count = state.count - action.payload
+    state.boxList.pop(state.count)
   } else if(action.type === 'reset') {
     state.count = 0
+    state.boxList = []
+  }
+
+  if(state.count >= 10) {
+    state.color = 'red'
+  } else {
+    state.color = 'black'
   }
 
   return {...state}
 }
+
+
 
 const store = createStore(reducer)
 

@@ -5,6 +5,9 @@ import Children from './components/Children'
 
 function App() {
   let count = useSelector(state => state.count)
+  let boxList = useSelector(state => state.boxList)
+  let color = useSelector(state => state.color)
+
   let dispatch = useDispatch()
 
   const increaseNum = () => {
@@ -15,12 +18,21 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Redux Counter App</h1>
-      <h2 style={{color: count >= 10 ? 'red' : 'black'}}>{count}</h2>
-      <button onClick={() => increaseNum()}>Increment</button>
-      <button onClick={() => dispatch({type:'decrement', payload: 1})}>Decrement</button>
-      <button onClick={() => dispatch({type: 'reset'})}>Reset</button>
-      <Children />
+      <div>
+        <h1>Redux Counter App</h1>
+        <h2 style={{color: color}}>{count}</h2>
+        <button onClick={() => increaseNum()}>+</button>
+        <button className="resetBtn" onClick={() => dispatch({type: 'reset'})}>Reset</button>
+        <button onClick={() => dispatch({type:'decrement', payload: 1})}>-</button>
+        <form className="form">
+          <div className="inputLabel">
+            <label>Change Box Color:</label>
+          </div>
+          <input type="text" id="backgroundColor" placeholder="Enter color name" />
+        </form>
+
+        {boxList && boxList.map(item => <Children />)}
+      </div>
     </div>
   );
 }
