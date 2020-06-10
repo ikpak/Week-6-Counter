@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Children from './components/Children'
 
 function App() {
-  let count = useSelector(state => state.count)
-  let boxList = useSelector(state => state.boxList)
-  let color = useSelector(state => state.color)
+  let state = useSelector(state => state)
 
   let dispatch = useDispatch()
 
@@ -16,11 +14,15 @@ function App() {
     })
   }
 
+  const renderBox = () => {
+    return state.boxList.map((item, idx) => <Children id={idx+1} />)
+  }
+
   return (
     <div className="App">
       <div>
         <h1>Redux Counter App</h1>
-        <h2 style={{color: color}}>{count}</h2>
+        <h2 style={{color: state.color}}>{state.count}</h2>
         <button onClick={() => increaseNum()}>+</button>
         <button className="resetBtn" onClick={() => dispatch({type: 'reset'})}>Reset</button>
         <button onClick={() => dispatch({type:'decrement', payload: 1})}>-</button>
@@ -28,10 +30,10 @@ function App() {
           <div className="inputLabel">
             <label>Change Box Color:</label>
           </div>
-          <input type="text" id="backgroundColor" placeholder="Enter color name" />
+          <input type="text" placeholder="Enter color name" onChange={(e) => dispatch({type: 'changeBgColor', payload: e.target.value})} />
         </form>
 
-        {boxList && boxList.map(item => <Children />)}
+        {renderBox()}
       </div>
     </div>
   );

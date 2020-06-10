@@ -9,20 +9,25 @@ import { createStore} from 'redux'
 const initialState = {
   count: 0,
   boxList: [],
-  color: 'black'
+  color: 'black',
+  bgColor: 'white'
 }
 
 function reducer(state=initialState, action) {
   if(action.type === 'increment') {
     state.count++
-    state.boxList.push(state.count)
+    state.boxList.push('')
     console.log("BoxList:", state.boxList)
   } else if(action.type === 'decrement' && state.count > 0) {
     state.count = state.count - action.payload
-    state.boxList.pop(state.count)
+    state.boxList.pop('')
   } else if(action.type === 'reset') {
     state.count = 0
     state.boxList = []
+  } else if(action.type === 'changeBgColor') {
+    state.bgColor = action.payload
+  } else if(action.type === 'eachBgColor') {
+    state.boxList[action.payload.id] = action.payload.value
   }
 
   if(state.count >= 10) {
